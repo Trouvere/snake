@@ -18,3 +18,20 @@ body {
   height: 50px;
   padding: 5px;
 }
+
+.snakeBody {
+  background: url(snakeBody.jpg);
+  background-size: cover;
+  border-radius: 50%;
+}
+
+.snakeHead {
+  background: url(snakeHead.jpg);
+  background-size: cover;
+  border-radius: 10%;
+}
+
+.mouse {
+  background: url(mouse.jpg);
+  background-size: cover;
+}
