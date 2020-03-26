@@ -66,7 +66,10 @@ function createMouse() {
 }
 createMouse();
 
-function move(params) {
+let direction = "right";
+
+function move() {
+  //   console.log(snakeBody);
   let coordinatesSnake = [
     snakeBody[0].getAttribute("posX"),
     snakeBody[0].getAttribute("posY")
@@ -74,20 +77,94 @@ function move(params) {
   snakeBody[0].classList.remove("snakeHead");
   snakeBody[snakeBody.length - 1].classList.remove("snakeBody");
   snakeBody.pop();
-  // (+coordinatesSnake[0] + 1)
-  snakeBody.unshift(
-    document.querySelector(
-      '[posX="' +
-        (+coordinatesSnake[0] + 1) +
-        '"][posY="' +
-        coordinatesSnake[1] +
-        '"]'
-    )
-  );
-
+  if (direction == "right") {
+    if (coordinatesSnake[0] < 10) {
+      // (+coordinatesSnake[0] + 1)
+      snakeBody.unshift(
+        document.querySelector(
+          '[posX="' +
+            (+coordinatesSnake[0] + 1) +
+            '"][posY="' +
+            coordinatesSnake[1] +
+            '"]'
+        )
+      );
+    } else {
+      snakeBody.unshift(
+        document.querySelector('[posX="1"][posY="' + coordinatesSnake[1] + '"]')
+      );
+    }
+  } else if (direction == "left") {
+    if (coordinatesSnake[0] > 1) {
+      // (+coordinatesSnake[0] + 1)
+      snakeBody.unshift(
+        document.querySelector(
+          '[posX="' +
+            (+coordinatesSnake[0] - 1) +
+            '"][posY="' +
+            coordinatesSnake[1] +
+            '"]'
+        )
+      );
+    } else {
+      snakeBody.unshift(
+        document.querySelector(
+          '[posX="10"][posY="' + coordinatesSnake[1] + '"]'
+        )
+      );
+    }
+  } else if (direction == "up") {
+    if (coordinatesSnake[1] < 10) {
+      // (+coordinatesSnake[0] + 1)
+      snakeBody.unshift(
+        document.querySelector(
+          '[posX="' +
+            coordinatesSnake[0] +
+            '"][posY="' +
+            (+coordinatesSnake[1] + 1) +
+            '"]'
+        )
+      );
+    } else {
+      snakeBody.unshift(
+        document.querySelector('[posX="' + coordinatesSnake[0] + '"][posY="1"]')
+      );
+    }
+  } else if (direction == "down") {
+    if (coordinatesSnake[1] > 1) {
+      // (+coordinatesSnake[0] + 1)
+      snakeBody.unshift(
+        document.querySelector(
+          '[posX="' +
+            coordinatesSnake[0] +
+            '"][posY="' +
+            (+coordinatesSnake[1] - 1) +
+            '"]'
+        )
+      );
+    } else {
+      snakeBody.unshift(
+        document.querySelector(
+          '[posX="' + coordinatesSnake[0] + '"][posY="10"]'
+        )
+      );
+    }
+  }
   snakeBody[0].classList.add("snakeHead");
   for (let i = 0; i < snakeBody.length; i++) {
     snakeBody[i].classList.add("snakeBody");
   }
 }
 let interval = setInterval(move, 300);
+
+window.addEventListener("keydown", function(e) {
+  if (e.keyCode == 37 && direction != "right") {
+    direction = "left";
+  } else if (e.keyCode == 38 && direction != "down") {
+    direction = "up";
+  } else if (e.keyCode == 39 && direction != "left") {
+    direction = "right";
+  } else if (e.keyCode == 40 && direction != "up") {
+    direction = "down";
+  }
+});
