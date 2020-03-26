@@ -22,7 +22,7 @@ for (let i = 0; i < excel.length; i++) {
 // random position snake, min=3
 function generateSnake() {
   let posX = Math.round(Math.random() * (10 - 3) + 3);
-  let posY = Math.round(Math.random() * (10 - 3) + 3);
+  let posY = Math.round(Math.random() * (10 - 1) + 1);
   return [posX, posY];
 }
 let coordinates = generateSnake();
@@ -47,8 +47,8 @@ let mouse;
 
 function createMouse() {
   function generateMouse() {
-    let posX = Math.round(Math.random() * (10 - 3) + 3);
-    let posY = Math.round(Math.random() * (10 - 3) + 3);
+    let posX = Math.round(Math.random() * (10 - 1) + 1);
+    let posY = Math.round(Math.random() * (10 - 1) + 1);
     return [posX, posY];
   }
   let coordinatesMouse = generateMouse();
@@ -65,3 +65,29 @@ function createMouse() {
   mouse.classList.add("mouse");
 }
 createMouse();
+
+function move(params) {
+  let coordinatesSnake = [
+    snakeBody[0].getAttribute("posX"),
+    snakeBody[0].getAttribute("posY")
+  ];
+  snakeBody[0].classList.remove("snakeHead");
+  snakeBody[snakeBody.length - 1].classList.remove("snakeBody");
+  snakeBody.pop();
+  // (+coordinatesSnake[0] + 1)
+  snakeBody.unshift(
+    document.querySelector(
+      '[posX="' +
+        (+coordinatesSnake[0] + 1) +
+        '"][posY="' +
+        coordinatesSnake[1] +
+        '"]'
+    )
+  );
+
+  snakeBody[0].classList.add("snakeHead");
+  for (let i = 0; i < snakeBody.length; i++) {
+    snakeBody[i].classList.add("snakeBody");
+  }
+}
+let interval = setInterval(move, 300);
