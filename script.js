@@ -67,6 +67,7 @@ function createMouse() {
 createMouse();
 
 let direction = "right";
+let steps = false;
 
 function move() {
   //   console.log(snakeBody);
@@ -162,21 +163,37 @@ function move() {
     );
     createMouse();
   }
+  if (snakeBody[0].classList.contains("snakeBody")) {
+    setTimeout(() => {
+      alert("Game over");
+    }, 200);
+
+    clearInterval(interval);
+    snakeBody[0].style.background = "url(snakebite.jpg) center no-repeat";
+    snakeBody[0].style.backgroundSize = "cover";
+  }
   snakeBody[0].classList.add("snakeHead");
   for (let i = 0; i < snakeBody.length; i++) {
     snakeBody[i].classList.add("snakeBody");
   }
+  steps = true;
 }
 let interval = setInterval(move, 300);
 
 window.addEventListener("keydown", function(e) {
-  if (e.keyCode == 37 && direction != "right") {
-    direction = "left";
-  } else if (e.keyCode == 38 && direction != "down") {
-    direction = "up";
-  } else if (e.keyCode == 39 && direction != "left") {
-    direction = "right";
-  } else if (e.keyCode == 40 && direction != "up") {
-    direction = "down";
+  if (steps) {
+    if (e.keyCode == 37 && direction != "right") {
+      direction = "left";
+      steps = false;
+    } else if (e.keyCode == 38 && direction != "down") {
+      direction = "up";
+      steps = false;
+    } else if (e.keyCode == 39 && direction != "left") {
+      direction = "right";
+      steps = false;
+    } else if (e.keyCode == 40 && direction != "up") {
+      direction = "down";
+      steps = false;
+    }
   }
 });
