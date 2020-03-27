@@ -68,6 +68,17 @@ createMouse();
 
 let direction = "right";
 let steps = false;
+let input = document.createElement("input");
+document.body.appendChild(input);
+// Потом переписать в css
+input.style.cssText = `
+margin: auto;
+margin-top: 40px;
+font-size: 20px;
+display: block;
+`;
+let score = 0;
+input.value = `Ваши очки: ${score}`;
 
 function move() {
   //   console.log(snakeBody);
@@ -162,10 +173,12 @@ function move() {
       document.querySelector('[posX="' + a + '"][posY="' + b + '"]')
     );
     createMouse();
+    score++;
+    input.value = `Ваши очки: ${score}`;
   }
   if (snakeBody[0].classList.contains("snakeBody")) {
     setTimeout(() => {
-      alert("Game over");
+      alert(`Game over! Ваши очки: ${score}`);
     }, 200);
 
     clearInterval(interval);
