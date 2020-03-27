@@ -150,6 +150,18 @@ function move() {
       );
     }
   }
+  if (
+    snakeBody[0].getAttribute("posX") == mouse.getAttribute("posX") &&
+    snakeBody[0].getAttribute("posY") == mouse.getAttribute("posY")
+  ) {
+    mouse.classList.remove("mouse");
+    let a = snakeBody[snakeBody.length - 1].getAttribute("posX");
+    let b = snakeBody[snakeBody.length - 1].getAttribute("posY");
+    snakeBody.push(
+      document.querySelector('[posX="' + a + '"][posY="' + b + '"]')
+    );
+    createMouse();
+  }
   snakeBody[0].classList.add("snakeHead");
   for (let i = 0; i < snakeBody.length; i++) {
     snakeBody[i].classList.add("snakeBody");
